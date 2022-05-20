@@ -13,19 +13,19 @@ window.onload = function () {
     var end = document.getElementById('end');
     var score = 0;
     var game = document.getElementById('game');
-    var score_display = document.getElementsByClassName('boundary example')
-
+    var not_playing = false;
     
     var run_maze = function (){
+        
         game.addEventListener("mouseleave", you_lost);
 
         game_prompt.innerHTML = "GAME STARTED";
 
         for (var i = 0; i < boundaries.length; i++) {
-            boundaries[i].addEventListener("mouseover", you_lost);
+            boundaries[i].addEventListener("mouseover", you_lost, true);
         }
 
-        if(end.addEventListener("mouseover", you_won));
+        if (end.addEventListener("mouseover", you_won, true));
     }
 
 var you_won = function () {
@@ -33,15 +33,23 @@ var you_won = function () {
     document.body.style.backgroundColor = "lightgreen";
     game_prompt.innerHTML = "YOU WON! Press Space To restart";
     score += 5;
-
+    console.log(score);
+    not_playing = true;
+    end.removeEventListener("mouseover", you_won, false);
     }
 
 var you_lost = function () {
-  for (var i = 0; i < boundaries.length; i++) {
+    for (var i = 0; i < boundaries.length; i++) {
     boundaries[i].classList.add("youlose");// https://stackoverflow.com/a/14101453
   }
-  game_prompt.innerHTML = "YOU LOST :( Press Space to restart";
-  score -= 10;
+    game_prompt.innerHTML = "YOU LOST :( Press Space to restart";
+    score -= 10;
+    console.log(score);
+    not_playing = true;
+    
+    for (var i = 0; i < boundaries.length; i++) {
+      boundaries[i].removeEventListener("mouseover", you_lost, false);
+    }
     }
 
 var reset = function () {
@@ -50,7 +58,7 @@ var reset = function () {
     }
     document.body.style.backgroundColor = "white";
     game_prompt.innerHTML = 'Begin by moving your mouse over the "S"';
-    score_display.innerHTML = 'your score is' + score;
+
 
     }
 
