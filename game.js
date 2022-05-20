@@ -11,24 +11,62 @@ window.onload = function () {
     var start = document.getElementById('start');
     var game_prompt = document.getElementById("status");
     var end = document.getElementById('end');
+    var score = 0;
+    var game = document.getElementById('game');
+    var score_display = document.getElementsByClassName('boundary example')
 
     
     var run_maze = function (){
+        game.addEventListener("mouseleave", you_lost);
+
         game_prompt.innerHTML = "GAME STARTED";
+
         for (var i = 0; i < boundaries.length; i++) {
-        boundaries[i].addEventListener("mouseover", function(){
-         document.body.style.backgroundColor = "red";
-         game_prompt.innerHTML = "YOU LOST";
-         return
-        });
+            boundaries[i].addEventListener("mouseover", you_lost);
         }
-        end.addEventListener("mouseover", function(){
-            document.body.style.backgroundColor = "lightgreen";
-            game_prompt.innerHTML = "YOU WON";
-            return
-        })
-        
+
+        if(end.addEventListener("mouseover", you_won));
     }
 
-    start.addEventListener('click', run_maze);
+var you_won = function () {
+     
+    document.body.style.backgroundColor = "lightgreen";
+    game_prompt.innerHTML = "YOU WON! Press Space To restart";
+    score += 5;
+
+    }
+
+var you_lost = function () {
+  for (var i = 0; i < boundaries.length; i++) {
+    boundaries[i].classList.add("youlose");// https://stackoverflow.com/a/14101453
+  }
+  game_prompt.innerHTML = "YOU LOST :( Press Space to restart";
+  score -= 10;
+    }
+
+var reset = function () {
+    for (var i = 0; i < boundaries.length; i++) {
+      boundaries[i].classList.remove("youlose");
+    }
+    document.body.style.backgroundColor = "white";
+    game_prompt.innerHTML = 'Begin by moving your mouse over the "S"';
+    score_display.innerHTML = 'your score is' + score;
+
+    }
+
+document.addEventListener("keyup", (reset) => {
+    if (reset.code === "Space") {
+    for (var i = 0; i < boundaries.length; i++) {
+        boundaries[i].classList.remove("youlose");
+    }
+    document.body.style.backgroundColor = "white";
+    game_prompt.innerHTML = 'Begin by moving your mouse over the "S"';
+    score = 0;
+    }
+});
+
+start.addEventListener('click', ()=>{ //https:stackoverflow.com/a/25028877
+    reset();
+    run_maze ();
+});
 };
