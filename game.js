@@ -28,36 +28,48 @@ var run_maze = function (){
 
         for (var i = 0; i < boundaries.length; i++) {
             boundaries[i].addEventListener("mouseover", you_lost);
+            
         }
+        
 
         if (end.addEventListener("mouseover", you_won));
+
 }
 var you_won = function () {
-     
+     for (var i = 0; i < boundaries.length; i++) {
+       boundaries[i].style.backgroundColor="lightgreen";
+       boundaries[i].removeEventListener("mouseover", you_lost)
+     }
+    game.removeEventListener("mouseleave", you_lost);
+    end.removeEventListener("mouseover", you_won);
     document.body.style.backgroundColor = "lightgreen";
     game_prompt.innerHTML = "YOU WON! Press Space To restart";
     score += 5;
     console.log(score);
-    finished = true;
+
     }
 
 var you_lost = function () {
     for (var i = 0; i < boundaries.length; i++) {
         boundaries[i].classList.add("youlose");// https://stackoverflow.com/a/14101453
+        boundaries[i].removeEventListener("mouseover", you_lost);
   }
+    game.removeEventListener("mouseleave", you_lost);
     document.body.style.backgroundColor = "#ff8888";
+    end.removeEventListener("mouseover", you_won);
     game_prompt.innerHTML = "YOU LOST :( Press Space to restart";
     score -= 10;
     console.log(score);
-    finished=true;
+
     }
 
 
 
 var reset = function () {
     for (var i = 0; i < boundaries.length; i++) {
-      boundaries[i].classList.remove("youlose");
+      boundaries[i].style.backgroundColor = "white";
     }
+    
     document.body.style.backgroundColor = "white";
     game_prompt.innerHTML = 'Begin by moving your mouse over the "S"';
 
@@ -67,7 +79,7 @@ var reset = function () {
 document.addEventListener("keyup", (reset) => {
     if (reset.code === "Space") {
     for (var i = 0; i < boundaries.length; i++) {
-        boundaries[i].classList.remove("youlose");
+        boundaries[i].style.backgroundColor="white";
     }
     document.body.style.backgroundColor = "white";
     game_prompt.innerHTML = 'Begin by moving your mouse over the "S"';
