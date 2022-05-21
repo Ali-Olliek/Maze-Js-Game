@@ -37,7 +37,6 @@ var run_maze = function (){
 }
 var you_won = function () {
      for (var i = 0; i < boundaries.length; i++) {
-       boundaries[i].style.backgroundColor="lightgreen";
        boundaries[i].removeEventListener("mouseover", you_lost)
      }
     game.removeEventListener("mouseleave", you_lost);
@@ -51,16 +50,15 @@ var you_won = function () {
 
 var you_lost = function () {
     for (var i = 0; i < boundaries.length; i++) {
-        boundaries[i].classList.add("youlose");// https://stackoverflow.com/a/14101453
+        boundaries[i].classList.add("youlose"); // https://stackoverflow.com/a/14101453
         boundaries[i].removeEventListener("mouseover", you_lost);
-  }
+}
     game.removeEventListener("mouseleave", you_lost);
     document.body.style.backgroundColor = "#ff8888";
     end.removeEventListener("mouseover", you_won);
     game_prompt.innerHTML = "YOU LOST :( Press Space to restart";
     score -= 10;
     console.log(score);
-
     }
 
 
@@ -72,18 +70,18 @@ var reset = function () {
     
     document.body.style.backgroundColor = "white";
     game_prompt.innerHTML = 'Begin by moving your mouse over the "S"';
-
+    score = 0;
 
     }
 
-document.addEventListener("keyup", (reset) => {
-    if (reset.code === "Space") {
+document.addEventListener("keyup", (e) => {
+    if (e.code === "Space") {
     for (var i = 0; i < boundaries.length; i++) {
         boundaries[i].style.backgroundColor="white";
     }
     document.body.style.backgroundColor = "white";
     game_prompt.innerHTML = 'Begin by moving your mouse over the "S"';
-    score = 0;
+    
     }
 });
 
