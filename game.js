@@ -14,7 +14,9 @@ window.onload = function () {
     var score = 0;
     var game = document.getElementById('game');
     var finished = false;
-    
+    const score_display_list = document.getElementsByClassName('example');
+    const score_display = score_display_list[0];
+
 var run_maze = function (){
     if (finished===true) {
     for (var i = 0; i < boundaries.length; i++) {
@@ -45,12 +47,11 @@ var you_won = function () {
     game_prompt.innerHTML = "YOU WON! Press Space To restart";
     score += 5;
     console.log(score);
-
+    score_display.innerHTML = score
     }
 
 var you_lost = function () {
-    for (var i = 0; i < boundaries.length; i++) {
-        boundaries[i].classList.add("youlose"); // https://stackoverflow.com/a/14101453
+    for (var i = 0; i < boundaries.length; i++) { 
         boundaries[i].removeEventListener("mouseover", you_lost);
 }
     game.removeEventListener("mouseleave", you_lost);
@@ -59,6 +60,7 @@ var you_lost = function () {
     game_prompt.innerHTML = "YOU LOST :( Press Space to restart";
     score -= 10;
     console.log(score);
+    score_display.innerHTML = score
     }
 
 
@@ -70,7 +72,6 @@ var reset = function () {
     
     document.body.style.backgroundColor = "white";
     game_prompt.innerHTML = 'Begin by moving your mouse over the "S"';
-    score = 0;
 
     }
 
