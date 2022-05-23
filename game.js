@@ -8,11 +8,19 @@ window.onload = function () {
     var game = document.getElementById("game");
     var score_display_list = document.getElementsByClassName("example");
     var score_display = score_display_list[0];
+    var now = document.getElementById("now");
+    var last = document.getElementById("last");
+    var best = document.getElementById("best");
 
 var run_maze = function (){
     for (var i = 0; i < boundaries.length; i++) {
         boundaries[i].addEventListener("mouseover", you_lost);  
     }
+    var seconds=0;
+    var timer = setInterval(function () {
+        now.innerHTML = seconds++;
+    }, 100);
+
     game.addEventListener("mouseleave", you_lost);
 
     game_prompt.innerHTML = "GAME STARTED";
@@ -26,6 +34,7 @@ var you_won = function () {
     score += 5;
     score_display.innerHTML = "SCORE: " + score
     remove_listeners()
+    clearInterval(timer);
     }
 
 var you_lost = function () {
@@ -35,7 +44,7 @@ var you_lost = function () {
     game_prompt.innerHTML = "YOU LOST :( Press Space to restart";
     score_display.innerHTML = "SCORE: " + score
     remove_listeners()
-
+    clearInterval(timer)
 }
 
 // GET RID OF UNWANTED LISTENERS
@@ -69,6 +78,10 @@ document.addEventListener("keyup", (e) => {
     reset()
     }
 });
+
+
+// Timer
+
 
 // START GAME
 
