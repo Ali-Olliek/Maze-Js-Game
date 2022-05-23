@@ -8,6 +8,7 @@ window.onload = function () {
     var game = document.getElementById("game");
     var score_display_list = document.getElementsByClassName("example");
     var score_display = score_display_list[0];
+    playing = false;
 
 var run_maze = function (){
     for (var i = 0; i < boundaries.length; i++) {
@@ -50,6 +51,21 @@ var remove_listeners = function () {
     
 }
 
+// Calculate time
+var get_time = function() {
+    if(playing) {
+    let time=0;
+    setInterval((e) => {
+        time++
+        console.log(time)
+    }, 500);
+}
+}
+
+// Display Time
+var current_time = document.getElementById('now').innerHTML= "This round: "+ get_time();
+var best_time = document.getElementById('best').innerHTML = "Best round: " + get_time();
+var last = document.getElementById('last').innerHTML = "Last round: " + get_time();
 // GAME RESET
 
 var reset = function () {
@@ -65,7 +81,7 @@ var reset = function () {
 // SPACEBAR RESET
 
 document.addEventListener("keyup", (e) => { 
-    if (e.code === "Space") {
+    if (e.code === "Space" && playing==false) {
     reset()
     }
 });
@@ -73,8 +89,10 @@ document.addEventListener("keyup", (e) => {
 // START GAME
 
 start.addEventListener('click', ()=>{ //https:stackoverflow.com/a/25028877
-    
+    if(!playing) {
+    playing=true;
     reset();
     run_maze ();
+}
 });
 };

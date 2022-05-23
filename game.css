@@ -58,6 +58,20 @@ div.youlose {
 	background-color: #ff8888;
 }
 
+.timers {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	margin-block: 50px;
+}
+
+.time {
+	width: 100px;
+	height: 50px;
+	border: 1px solid black;
+	background-color: #eeeeee;
+}
+
 /*
 Hack hack hack; these are CSS "sibling selectors" for selecting
 neighboring elements.  Necessary to avoid giving ids to the boundary divs
