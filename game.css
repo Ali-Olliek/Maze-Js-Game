@@ -58,7 +58,7 @@ div.youlose {
 }
 .stat-time {
 	margin-inline: 30%;
-	margin-block: 10%;
+	margin-block: 5%;
 	display: flex;
 	justify-content: space-around;
 }
@@ -76,7 +76,7 @@ div.youlose {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
-	margin-block: 50px;
+	margin-block: 40px;
 }
 
 .time {
