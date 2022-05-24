@@ -44,6 +44,7 @@ var you_won = function () {
     display_time();
     remove_listeners();
     clearInterval(interval);
+    display_time_win()
 };
 
 // LOSE
@@ -73,14 +74,17 @@ function stopwatch() {
 }
 
 function display_time (){
-    best_try = 0;
     last.innerHTML = "Last try: "+ "<br> " + (elapsedTime/1000).toFixed(2);
-    if (elapsedTime>best_try) {
+
+}
+
+function display_time_win () {
+    let best_try = 5000;
+    if (elapsedTime<best_try) {
         best_try=elapsedTime;
         best.innerHTML = "Best time + <br>" + (best_try/1000).toFixed(2);
     }
 }
-
 // GET RID OF UNWANTED LISTENERS
 
 var remove_listeners = function () {
