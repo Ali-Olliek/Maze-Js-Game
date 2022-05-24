@@ -41,8 +41,9 @@ var you_won = function () {
     game_prompt.innerHTML = "YOU WON! Press Space To restart";
     score += 5;
     score_display.innerHTML = "SCORE: " + score;
+    display_time();
     remove_listeners();
-    clearInterval(timer);
+    clearInterval(interval);
 };
 
 // LOSE
@@ -53,20 +54,32 @@ var you_lost = function () {
     document.body.style.backgroundColor = "#ff8888";
     game_prompt.innerHTML = "YOU LOST :( Press Space to restart";
     score_display.innerHTML = "SCORE: " + score;
+    display_time();
     remove_listeners();
-    clearInterval(timer)
+    clearInterval(interval);
 };
 
 // TIMER
 
-var stopwatch = function(){
-    var sec = 0;
-    timer = setInterval(()=>{
-        now.innerHTML = "00:"+sec;
-        sec++;
-    }, 200)
+
+
+function stopwatch() {
+    var time_start = Date.now()
+    interval = setInterval(function() {
+        elapsedTime = Date.now()-time_start;
+        var now = document.getElementById("now");
+        return now.innerHTML = "Current time: " + "<br>" + (elapsedTime/1000).toFixed(2);
+    }, 100);
 }
 
+function display_time (){
+    best_try = 0;
+    last.innerHTML = "Last try: "+ "<br> " + (elapsedTime/1000).toFixed(2);
+    if (elapsedTime>best_try) {
+        best_try=elapsedTime;
+        best.innerHTML = "Best time + <br>" + (best_try/1000).toFixed(2);
+    }
+}
 
 // GET RID OF UNWANTED LISTENERS
 
@@ -81,11 +94,12 @@ var remove_listeners = function () {
 // GAME RESET
 
 var reset = function () {
-for (var i = 0; i < boundaries.length; i++) {
-    boundaries[i].style.backgroundColor = "white";
-    }
-    document.body.style.backgroundColor = "white";
-    game_prompt.innerHTML = 'Begin by moving your mouse over the "S"';
+    for (var i = 0; i < boundaries.length; i++) {
+        boundaries[i].style.backgroundColor = "white";
+        }
+        document.body.style.backgroundColor = "white";
+        game_prompt.innerHTML = 'Begin by moving your mouse over the "S"';
+    
 };
 
 // SPACEBAR RESET
@@ -95,6 +109,7 @@ if (e.code === "Space") {
     score = 0;
     score_display.innerHTML = "SCORE: "+score;
     reset();
+    clearInterval(interval)
     }
 });
 
@@ -102,7 +117,7 @@ if (e.code === "Space") {
 
 start.addEventListener("click", () => {
     //https:stackoverflow.com/a/25028877
-    playing = true;
+    playing = true
     reset();
     run_maze();
     });
